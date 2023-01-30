@@ -24,8 +24,28 @@ while(playerHealth > 0 && enemyHealth > 0) {
     //check if player wishes to fight or not
     var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.")
 
-    //if player chooses to fight, then fight
-    if (promptFight === "fight" || promptFight === "FIGHT") {
+    if (promptFight === "skip" || promptFight === "SKIP") {
+        window.alert(playerName + " has chosen to skip the fight!");
+
+        //confirm player wants to skip
+        var confirmSkip = window.confirm("Are you sure you would like to skip this fight?");
+
+        //if yes, leave fight
+        if(confirmSkip) {
+            window.alert(playerName + " has decided to skip this fight. Goodluck next time!");
+            //subtract money for skipping
+            playerMoney = playerMoney - 10;
+            console.log("playerMoney ", playerMoney);
+            break;
+        }
+            //if no, ask question again by running fight() again
+        else {
+            fight();
+        }
+        
+    } 
+        //if player chooses to fight, then fight
+    else if (promptFight === "fight" || promptFight === "FIGHT") {
 
         //Subtract the value of `playerAttack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
         enemyHealth = enemyHealth - playerAttack;
@@ -62,34 +82,73 @@ while(playerHealth > 0 && enemyHealth > 0) {
         };
 
     //if player chooses to skip
-    } else if (promptFight === "skip" || promptFight === "SKIP") {
-        window.alert(playerName + " has chosen to skip the fight!");
-
-        //confirm player wants to skip
-        var confirmSkip = window.confirm("Are you sure you would like to skip this fight?");
-
-        //if yes, leave fight
-        if(confirmSkip) {
-            window.alert(playerName + " has decided to skip this fight. Goodluck next time!");
-            //subtract money for skipping
-            playerMoney = playerMoney - 10;
-            console.log("playerMoney ", playerMoney);
-        }
-            //if no, ask question again by running fight() again
-        else {
-            fight();
-        }
-        } else {
-            window.alert("You need to choose a valid option. Try again!");
-        }
+    } else {
+        window.alert("You need to choose a valid option. Try again!");
+    }
 }
 
 //This executes the "fight" function
 };
 
-for(var i = 0; i < enemyNames.length; i++) {
-    debugger;
-    var pickedEnemyName = enemyNames[i];
-    enemyHealth = 50;
-    fight(enemyNames[i]);
+var startGame = function() {
+
+    //reset player stats
+    playerHealth = 100;
+    playerAttack = 10;
+    playerMoney = 10;
+
+    for(var i = 0; i < enemyNames.length; i++) {
+
+        //let player know what round they are in
+        if (playerHealth > 0) {
+            window.alert("Welcome to the Robot Gladiators! Round " + (i + 1) );
+        
+    
+        //pick new enemy to fight based on index
+        var pickedEnemyName = enemyNames[i];
+        
+        //reset enemy health before new round
+        enemyHealth = 50;
+    
+        //use debugger to pause script and check whats going on
+        //debugger;
+    
+        //pass the pickedEnemyName variable's into the fight function
+        fight(pickedEnemyName);
+        }
+        
+        else {
+            window.alert ("Your robot has fallen in combat! Game Over!");
+            break;
+        }
+    }
+
+    //after the loop ends, player is out of health or enemies, run endGame function
+    endGame();
+
+};
+
+//function to end the game
+var endGame = function() {
+    //if player is still alive, they win
+    if (playerHealth > 0 ) {
+        window.alert("Great job, your robot has survived the gauntlet! You achieved a final score of " + (playerMoney + playerHealth) + ".");
+    }
+    else {
+        window.alert("Your robot fell without achieving glory in the gauntlet.");
+    }
+
+    //ask player if they would like to play again
+    var playAgainConfirm = window.confirm ("Would you like to play again?");
+
+    if (playAgainConfirm) {
+        //restart the game
+        startGame();
+    }
+    else {
+        window.alert("Thanks for the scrap! Better luck next time in the gauntlet.");
+    }
 }
+
+//start the game when the page loads
+startGame();
