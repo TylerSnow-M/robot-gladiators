@@ -115,9 +115,19 @@ var startGame = function() {
     
         //pass the pickedEnemyName variable's into the fight function
         fight(pickedEnemyName);
+
+        if (playerHealth > 0 && i < enemyNames.length - 1) {
+
+            //ask if the player wishes to use the shop before the next fight
+            var storeConfirm = window.confirm ("The fight is over, visit the store before the next round?");
+
+            //if yes, take them to the shop() function
+            if (storeConfirm){
+                shop();
+            }
         }
-        
-        else {
+
+        } else {
             window.alert ("Your robot has fallen in combat! Game Over!");
             break;
         }
@@ -132,7 +142,7 @@ var startGame = function() {
 var endGame = function() {
     //if player is still alive, they win
     if (playerHealth > 0 ) {
-        window.alert("Great job, your robot has survived the gauntlet! You achieved a final score of " + (playerMoney + playerHealth) + ".");
+        window.alert("Great job, your robot has survived the gauntlet! You achieved a final score of " + (playerMoney + (playerHealth / 2) ) + ".");
     }
     else {
         window.alert("Your robot fell without achieving glory in the gauntlet.");
@@ -149,6 +159,55 @@ var endGame = function() {
         window.alert("Thanks for the scrap! Better luck next time in the gauntlet.");
     }
 }
+
+var shop = function() {
+
+    //ask player what they would like to do
+    var shopOptionPrompt = window.prompt(
+        "would you like to REFILL your health, UPGRADE your attack or LEAVE the store? please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
+    )
+
+    //use switch to carry out choice
+    switch (shopOptionPrompt){
+        case "refill":
+            if (playerMoney >= 7) {
+                window.alert("Refilling player's health by 35 for 7 dollars.");
+
+            //increase health, lower money
+            playerHealth = playerHealth + 35;
+            playerMoney = playerMoney - 7;
+            }
+            else {
+                window.alert ("You don't have enough money! Get back in the Gauntlet to earn more.");
+            }
+            break;
+
+        case "upgrade":
+            if (playerMoney >= 7) {
+                window.alert("Upgrading player's attack by 6 for 7 dollars.");
+            //increase attack, lower money
+            playerAttack = playerAttack + 6;
+            playerMoney = playerMoney - 7;
+            }
+            else {
+                window.alert ("You don't have enough money! Get back in the Gauntlet to earn more.");
+            }
+            break;
+
+        case "leave":
+            window.alert("Leaving the store. Goodluck in your next fight!");
+            //nothing happens to end function
+            break;
+
+        default:
+            window.alert("You did not pick a valid option. Try again.")
+            //call shop() to force player to pick a valid option
+            shop();
+            break;
+    }
+
+};
+
 
 //start the game when the page loads
 startGame();
