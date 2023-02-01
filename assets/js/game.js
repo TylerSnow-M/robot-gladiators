@@ -4,19 +4,20 @@
 //      *Defeat each enemy-robot
 //"Lose" - Player robot's health is zero or less
 
-// This creates a function named "fight"
-var fight = function(pickedEnemyObj) {
-// Alert players that they are starting the round
-debugger;
-while(playerInfo.health > 0 && pickedEnemyObj.health > 0) {
-    //check if player wishes to fight or not
+
+var fightOrSkip = function() {
+
     var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.")
 
+    if(promptFight === "" || promptFight === null) {
+        window.alert("You need to provide a valid answer! Please try again.");
+        return fightOrSkip();
+    }
+    
     promptFight = promptFight.toLowerCase();
 
     //if player chooses to skip
     if (promptFight === "skip") {
-        window.alert(playerInfo.name + " has chosen to skip the fight!");
 
         //confirm player wants to skip
         var confirmSkip = window.confirm("Are you sure you would like to skip this fight?");
@@ -27,16 +28,24 @@ while(playerInfo.health > 0 && pickedEnemyObj.health > 0) {
             //subtract money for skipping
             playerInfo.money = Math.max(0, playerInfo.money - 10);
             console.log("playerInfo.money ", playerInfo.money);
-            break;
+            return true;
+            shop();
         }
-            //if no, ask question again by running fight() again
-        else {
-            fight();
-        }
-        
-    } 
-        //if player chooses to fight, then fight
-    else if (promptFight === "fight") {
+    }
+}
+
+
+// This creates a function named "fight"
+var fight = function(pickedEnemyObj) {
+// Alert players that they are starting the round
+//debugger;
+while(playerInfo.health > 0 && pickedEnemyObj.health > 0) {
+    
+    //check if player wishes to fight or not with fightOrSkip function
+       if (fightOrSkip()) {
+        //if true, leave fight by breaking loop
+        break;
+       }
 
         let damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
 
@@ -76,10 +85,6 @@ while(playerInfo.health > 0 && pickedEnemyObj.health > 0) {
         else {
             window.alert(playerInfo.name + " still has " + playerInfo.health + " health remaing")
         };
-
-    } else {
-        window.alert("You need to choose a valid option. Try again!");
-    }
 }
 
 //This executes the "fight" function
@@ -258,14 +263,9 @@ var enemyInfo = [
     },
 
     {
-<<<<<<< HEAD
-        name: "Robo trumble",
+        name: "Robo Trumble",
         attack: randomNumber(10,14),
         health: randomNumber(40,60)
-=======
-        name: "Robo Trumble",
-        attack: randomNumber(10,14)
->>>>>>> main
     }
 ];
 
