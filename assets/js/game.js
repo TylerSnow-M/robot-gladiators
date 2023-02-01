@@ -24,6 +24,7 @@ while(playerHealth > 0 && enemyHealth > 0) {
     //check if player wishes to fight or not
     var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.")
 
+    //if player chooses to skip
     if (promptFight === "skip" || promptFight === "SKIP") {
         window.alert(playerName + " has chosen to skip the fight!");
 
@@ -34,7 +35,7 @@ while(playerHealth > 0 && enemyHealth > 0) {
         if(confirmSkip) {
             window.alert(playerName + " has decided to skip this fight. Goodluck next time!");
             //subtract money for skipping
-            playerMoney = playerMoney - 10;
+            playerMoney = Math.max(0, playerMoney - 10);
             console.log("playerMoney ", playerMoney);
             break;
         }
@@ -47,8 +48,10 @@ while(playerHealth > 0 && enemyHealth > 0) {
         //if player chooses to fight, then fight
     else if (promptFight === "fight" || promptFight === "FIGHT") {
 
+        let damage = randomNumber(playerAttack - 3, playerAttack);
+
         //Subtract the value of `playerAttack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
-        enemyHealth = enemyHealth - playerAttack;
+        enemyHealth = Math.max(0, enemyHealth - damage);
 
         // Log a resulting message to the console so we know that it worked.
         console.log (
@@ -64,8 +67,10 @@ while(playerHealth > 0 && enemyHealth > 0) {
             window.alert(enemyName + " still has " + enemyHealth + " health remaining.");
         }
 
+        let enemyDamage = randomNumber (enemyAttack - 3, enemyAttack);
+
         // Subtract the value of `enemyAttack` from the value of `playerHealth` and use that result to update the value in the `playerHealth` variable.
-        playerHealth = playerHealth - enemyAttack
+        playerHealth = Math.max(0, playerHealth - enemyDamage);
 
         // Log a resulting message to the console so we know that it worked.};
         console.log(
@@ -81,7 +86,6 @@ while(playerHealth > 0 && enemyHealth > 0) {
             window.alert(playerName + " still has " + playerHealth + " health remaing")
         };
 
-    //if player chooses to skip
     } else {
         window.alert("You need to choose a valid option. Try again!");
     }
@@ -108,7 +112,7 @@ var startGame = function() {
         var pickedEnemyName = enemyNames[i];
         
         //reset enemy health before new round
-        enemyHealth = 50;
+        enemyHealth = randomNumber(40,60);
     
         //use debugger to pause script and check whats going on
         //debugger;
@@ -169,6 +173,7 @@ var shop = function() {
 
     //use switch to carry out choice
     switch (shopOptionPrompt){
+        case "REFILL":
         case "refill":
             if (playerMoney >= 7) {
                 window.alert("Refilling player's health by 35 for 7 dollars.");
@@ -182,6 +187,7 @@ var shop = function() {
             }
             break;
 
+        case "UPGRADE":
         case "upgrade":
             if (playerMoney >= 7) {
                 window.alert("Upgrading player's attack by 6 for 7 dollars.");
@@ -194,6 +200,7 @@ var shop = function() {
             }
             break;
 
+        case "LEAVE":
         case "leave":
             window.alert("Leaving the store. Goodluck in your next fight!");
             //nothing happens to end function
@@ -207,6 +214,15 @@ var shop = function() {
     }
 
 };
+
+//function to generate a random numeric value
+var randomNumber = function(min,max) {
+    var value = Math.floor(Math.random() * (max-min + 1) + min);
+
+    return value;
+};
+
+//generate random damage value based on player's attack power
 
 
 //start the game when the page loads
