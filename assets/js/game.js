@@ -194,8 +194,20 @@ var randomNumber = function(min,max) {
     return value;
 };
 
+//function to set name
+var getPlayerName = function(){
+    var name = "";
+
+    while (name === "" || name === null) {
+        name = prompt("what is your robot's name?");
+    }
+
+    console.log("your robot's name is" + name);
+    return name;
+}
+
 var playerInfo = {
-    name: window.prompt("What is your robot's name?"),
+    name: getPlayerName(),
     health: 100,
     attack: 10,
     money: 10,
@@ -246,9 +258,14 @@ var enemyInfo = [
     },
 
     {
+<<<<<<< HEAD
         name: "Robo trumble",
         attack: randomNumber(10,14),
         health: randomNumber(40,60)
+=======
+        name: "Robo Trumble",
+        attack: randomNumber(10,14)
+>>>>>>> main
     }
 ];
 
