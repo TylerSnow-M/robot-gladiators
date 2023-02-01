@@ -149,12 +149,33 @@ var startGame = function() {
 
 //function to end the game
 var endGame = function() {
-    //if player is still alive, they win
-    if (playerInfo.health > 0 ) {
-        window.alert("Great job, your robot has survived the gauntlet! You achieved a final score of " + (playerInfo.money + (playerInfo.health / 2) ) + ".");
+
+    window.alert("The fights have finished! Let's see how you did after the dust settles eh Choom?");
+
+    //check localstorage for high score, if nothing, use 0
+    var highScore = localStorage.getItem("highscore");
+    if (highScore === null) {
+        highScore = 0;
+    }
+
+    var playerScore = playerInfo.money + (playerInfo.health / 2);
+
+        //if player is still alive, they win
+        if (playerInfo.health > 0 ) {
+            window.alert("Great job, your robot has survived the gauntlet! You achieved a final score of " + playerScore + ".");
+        }
+        else {
+            window.alert("Your robot fell without achieving glory in the gauntlet.");
+        }
+
+    if (playerScore > highScore) {
+        localStorage.setItem("HIGHSCORE", playerScore);
+        localStorage.setItem("Name", playerInfo.name);
+
+        alert(playerInfo.name + " now has the high score of " + playerScore + "!!");
     }
     else {
-        window.alert("Your robot fell without achieving glory in the gauntlet.");
+        alert(playerInfo.name + " did not achieve the highscore of " + highScore + ". Fight more in the gauntlet Choom");
     }
 
     //ask player if they would like to play again
@@ -221,7 +242,7 @@ var getPlayerName = function(){
     return name;
 }
 
-var playerInfo = {
+const playerInfo = {
     name: getPlayerName(),
     health: 100,
     attack: 10,
@@ -259,7 +280,7 @@ var playerInfo = {
 //Logging player stats together
 console.log(playerInfo.name, playerInfo.attack, playerInfo.health);
 
-var enemyInfo = [
+const enemyInfo = [
     {
         name: "Roborto",
         attack: randomNumber(10,14),
