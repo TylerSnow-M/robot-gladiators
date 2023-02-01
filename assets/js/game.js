@@ -38,9 +38,17 @@ var fightOrSkip = function() {
 // This creates a function named "fight"
 var fight = function(pickedEnemyObj) {
 // Alert players that they are starting the round
-//debugger;
+
+let isPlayerTurn = true;
+
+if(Math.random() > 0.5) {
+    isPlayerTurn = false;
+}
+
 while(playerInfo.health > 0 && pickedEnemyObj.health > 0) {
     
+    if(isPlayerTurn) {
+
     //check if player wishes to fight or not with fightOrSkip function
        if (fightOrSkip()) {
         //if true, leave fight by breaking loop
@@ -66,7 +74,8 @@ while(playerInfo.health > 0 && pickedEnemyObj.health > 0) {
         else {
             window.alert(pickedEnemyObj.name + " still has " + pickedEnemyObj.health + " health remaining.");
         }
-
+    }
+    else {
         let enemyDamage = randomNumber (pickedEnemyObj.attack - 3, pickedEnemyObj.attack);
 
         // Subtract the value of `enemy.attack` from the value of `playerInfo.health` and use that result to update the value in the `playerInfo.health` variable.
@@ -85,8 +94,10 @@ while(playerInfo.health > 0 && pickedEnemyObj.health > 0) {
         else {
             window.alert(playerInfo.name + " still has " + playerInfo.health + " health remaing")
         };
+    }
+    //switch turn order for next round
+    isPlayerTurn = !isPlayerTurn;
 }
-
 //This executes the "fight" function
 };
 
@@ -235,7 +246,7 @@ var playerInfo = {
     
     upgradeAttack: function(){
         if(this.money >= 7) {
-            window.alert("Getting some new upgrades Choom? That'll run you 7 Battlebux.")
+            window.alert("Getting some new upgrades Choom? That'll run you 10 Battlebux.")
             this.attack += 8;
             this.money -= 10;
         }
