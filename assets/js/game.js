@@ -60,7 +60,7 @@ while(playerInfo.health > 0 && pickedEnemyObj.health > 0) {
         //check enemy health
         if(pickedEnemyObj.health <= 0) {
             window.alert(pickedEnemyObj.name + " has died!");
-            playerInfo.money = playerInfo.money + 10;
+            playerInfo.money = playerInfo.money + 15;
             break;
         }
         else {
@@ -162,23 +162,22 @@ var shop = function() {
 
     //ask player what they would like to do
     var shopOptionPrompt = window.prompt(
-        "would you like to REFILL your health, UPGRADE your attack or LEAVE the store? please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
+        'Please type a number for your selection from our fine shop. \n1 to heal up your bot by 35 it will run you 7 [battlebux] \n2 to upgrade your bot with some new fire power will be 10 [battlebux] \n3 to leave the store. '
     )
+
+        shopOptionPrompt = parseInt(shopOptionPrompt);
 
     //use switch to carry out choice
     switch (shopOptionPrompt){
-        case "REFILL":
-        case "refill":
+        case 1:
             playerInfo.refillHealth();
             break;
 
-        case "UPGRADE":
-        case "upgrade":
+        case 2:
             playerInfo.upgradeAttack();
             break;
 
-        case "LEAVE":
-        case "leave":
+        case 3:
             window.alert("Leaving the store. Goodluck in your next fight!");
             //nothing happens to end function
             break;
@@ -237,8 +236,8 @@ var playerInfo = {
     upgradeAttack: function(){
         if(this.money >= 7) {
             window.alert("Getting some new upgrades Choom? That'll run you 7 Battlebux.")
-            this.attack += 6;
-            this.money -= 7;
+            this.attack += 8;
+            this.money -= 10;
         }
         else {
             window.alert("Sorry Choom, you're out of cash.")
