@@ -7,13 +7,15 @@
 // This creates a function named "fight"
 var fight = function(pickedEnemyObj) {
 // Alert players that they are starting the round
-
+debugger;
 while(playerInfo.health > 0 && pickedEnemyObj.health > 0) {
     //check if player wishes to fight or not
     var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.")
 
+    promptFight = promptFight.toLowerCase();
+
     //if player chooses to skip
-    if (promptFight === "skip" || promptFight === "SKIP") {
+    if (promptFight === "skip") {
         window.alert(playerInfo.name + " has chosen to skip the fight!");
 
         //confirm player wants to skip
@@ -34,7 +36,7 @@ while(playerInfo.health > 0 && pickedEnemyObj.health > 0) {
         
     } 
         //if player chooses to fight, then fight
-    else if (promptFight === "fight" || promptFight === "FIGHT") {
+    else if (promptFight === "fight") {
 
         let damage = randomNumber(playerInfo.attack - 3, playerInfo.attack);
 
@@ -233,17 +235,20 @@ console.log(playerInfo.name, playerInfo.attack, playerInfo.health);
 var enemyInfo = [
     {
         name: "Roborto",
-        attack: randomNumber(10,14)
+        attack: randomNumber(10,14),
+        health: randomNumber(40,60)
     },
 
     {
         name: "Amy Android",
-        attack: randomNumber(10,14)
+        attack: randomNumber(10,14),
+        health: randomNumber(40,60)
     },
 
     {
         name: "Robo trumble",
-        attack: randomNumber(10,14)
+        attack: randomNumber(10,14),
+        health: randomNumber(40,60)
     }
 ];
 
